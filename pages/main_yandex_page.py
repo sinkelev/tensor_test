@@ -1,5 +1,6 @@
 from .base_page import BasePage
 from selenium.webdriver.common.by import By
+import allure
 
 
 class MainPage(BasePage):
@@ -7,17 +8,23 @@ class MainPage(BasePage):
     SUGGEST_LIST = (By.CSS_SELECTOR, '.mini-suggest__popup')
     IMAGES_LINK = (By.CSS_SELECTOR, '[data-id="images"]')
 
+    @allure.step('Проверка наличия поля ввода')
     def should_be_search_field(self):
-        assert self.is_element_present(*self.SEARCH_FIELD), \
-            "Search field is not presented"
+        with allure.step('При открытии страницы есть поле ввода'):
+            assert self.is_element_present(*self.SEARCH_FIELD), \
+                'Search field is not presented'
 
+    @allure.step('Проверка наличия таблицы с подсказками (suggest)')
     def should_be_suggest_list(self):
-        assert self.is_element_present(*self.SUGGEST_LIST), \
-            "Suggest list is not presented"
+        with allure.step('При вводе запроса в input появляется suggest'):
+            assert self.is_element_present(*self.SUGGEST_LIST), \
+                'Suggest list is not presented'
 
+    @allure.step('Проверка наличия ссылки(иконки) на Yandex images')
     def should_be_images_link(self):
-        assert self.is_element_present(*self.IMAGES_LINK), \
-            "Images link is not presented"
+        with allure.step('На главной странице присутствует ссылка на images'):
+            assert self.is_element_present(*self.IMAGES_LINK), \
+                'Images link is not presented'
 
     def click_on_image_link(self):
         images = self.browser.find_element(

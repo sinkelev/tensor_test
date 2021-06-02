@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 .vscode/
+
+allure-report
+reports

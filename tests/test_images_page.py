@@ -1,8 +1,11 @@
+import allure
 import pytest
 from pages.main_yandex_page import MainPage
 from pages.images_yandex_page import ImagesPage
 
 
+@allure.story('Открытие yadnex.ru, переход на Яндекс картинки,'
+              'проверка функционала')
 @pytest.mark.test_image_service_ya
 def test_search_tensor_in_yandex(browser):
     url = 'https://yandex.ru/'
