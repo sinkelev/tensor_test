@@ -4,7 +4,7 @@ from pages.main_yandex_page import MainPage
 from pages.search_yandex_page import SearchPage
 
 
-@allure.story('Открытие yadnex.ru, ввод и проверка suggest,'
+@allure.story('Открытие yandex.ru, ввод и проверка suggest,'
               'проверка первых 5ти результатов выдачи')
 @pytest.mark.search_tensor_in_ya
 def test_search_tensor_in_yandex(browser):
