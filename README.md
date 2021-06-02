@@ -2,12 +2,22 @@
 
 
 ### Install and run:
-		Install chromedriver before run test: https://chromedriver.chromium.org/
 
-        Install the requirements.txt file: pip install -r requirements.txt
+1.Install [chromedriver](https://chromedriver.chromium.org/) before run test
+    
+2.Install the requirements.txt file:
+```sh
+pip install -r requirements.txt
+```
 
-        Install Allure Framework: https://docs.qameta.io/allure/
+3.Install [Allure Framework](https://docs.qameta.io/allure/)
 
-        Run tests: pytest --alluredir=reports
+4.Run tests:
+```sh
+pytest --alluredir=reports
+```
 
-        Run allure report: allure serve reports/
+5.Run allure report:
+```sh
+allure serve reports/
+```
