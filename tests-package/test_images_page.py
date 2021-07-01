@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""
+Содержит тест поисковой системы Yandex images
+"""
 from atf import run_tests, log
 from atf.ui import TestCaseUI
 

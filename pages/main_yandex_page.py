@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""
+Модуль для Главной страницы yandex.ru
+"""
 from atf.ui import *
 
 from selenium.webdriver.common.by import By
@@ -8,7 +12,7 @@ class MainPage(Region):
 
     search_inp      =   TextField(  By.CSS_SELECTOR,    'input.input__control', 'Поле ввода запроса')
     suggest_tbl     =   Table(      By.CSS_SELECTOR,    '.mini-suggest__popup', 'Подсказками')
-    images_elm      =   Element(    By.CSS_SELECTOR,    '[data-id="images"]', 'Картинки')
+    images_lnk      =   Link(       By.CSS_SELECTOR,    '[data-id="images"]', 'Картинки')
 
     def should_be_search_field(self):
         """Проверка поисковой строки"""
@@ -23,12 +27,12 @@ class MainPage(Region):
     def should_be_images_link(self):
         """Проверка иконки сервиса картинок"""
 
-        self.images_elm.should_be(Displayed)
+        self.images_lnk.should_be(Displayed)
 
     def click_on_image_link(self):
         """Клик по иконке сервиса картинок"""
 
-        self.images_elm.click()
+        self.images_lnk.click()
 
     def enter_request(self, request):
         """Ввести запрос в поисковую строку"""
