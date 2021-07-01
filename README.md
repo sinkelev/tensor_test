@@ -10,14 +10,6 @@
 pip install -r requirements.txt
 ```
 
-3. Install [Allure Framework](https://docs.qameta.io/allure/)
+3. Install atf framework
 
-4. Run tests:
-```sh
-pytest --alluredir=reports
-```
-
-5. Run allure report:
-```sh
-allure serve reports/
-```
+4. Run tests
