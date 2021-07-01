@@ -1,26 +1,19 @@
-from .base_page import BasePage
+from atf.assert_that import *
+from atf.ui import *
 from selenium.webdriver.common.by import By
-import allure
 
 
-class SearchPage(BasePage):
-    SEARCH_RESULT_LIST = (By.CSS_SELECTOR, '#search-result')
-    LINK_IN_SEARCH_LIST = (By.XPATH, '//*[@class="serp-item"]//h2//a')
+class SearchPage(Region):
+    """Страница поисковой выдачи yandex"""
+    search_result_list  =   Element(        By.CSS_SELECTOR, '#search-result', 'Поисковая выдача')
+    link_in_search_list =   CustomList(     By.XPATH,        '//*[@class="serp-item"]//h2//a', 'Ссылка на сайт')
 
-    @allure.step('Проверка наличия поисковой выдачи')
     def should_be_search_result_list(self):
-        with allure.step('При преходе на страницу'
-                         'поика есть результаты выдачи'):
-            assert self.is_element_present(*self.SEARCH_RESULT_LIST), \
-                'Search result list is not presented'
+        """Проверка таблицы с результатами"""
+        self.search_result_list.should_be(Displayed)
 
-    @allure.step('Проверка наличия в первых 5 результатах ссылкы на tensor.ru')
     def first_five_links_in_search_result(self, search_link):
-        first_five = self.browser.find_elements(
-            *self.LINK_IN_SEARCH_LIST
-        )[:5]
-        for link in first_five:
+        """В первых 5ти результатах присутстует ссылка """
+        for link in self.link_in_search_list:
             link = link.get_attribute('href')
-            with allure.step('Есть ссылка на tensor.ru'):
-                assert search_link in link, \
-                    f'Search link is not in {link}'
+            assert_that(search_link, is_in(link), f'Search link is not in {link}')

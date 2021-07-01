@@ -1,78 +1,50 @@
-from .base_page import BasePage
+from atf.assert_that import *
+from atf.ui import *
 from selenium.webdriver.common.by import By
-import allure
 
 
-class ImagesPage(BasePage):
-    CATEGORY_PICTURE = (By.XPATH, '//*[@class="PopularRequestList"]/div[1]/a')
-    TEXT_CATEGORY = (By.CSS_SELECTOR, '.PopularRequestList-SearchText')
-    INPUT_ON_IMAGES_PAGE = (By.CSS_SELECTOR, '.input__control')
-    BLOCK_SEARCH_IMAGES = (By.CSS_SELECTOR, '.serp-controller__content')
-    FIRST_IMAGES_IN_BLOCK = (
-        By.XPATH,
-        '//div[@class="serp-controller__content"]/div/div[1]//a'
-    )
-    OPEN_IMAGES = (By.CSS_SELECTOR, '.MMImage-Preview')
-    NEXT_IMAGE = (By.CSS_SELECTOR, '.CircleButton_type_next')
-    PREV_IMAGE = (By.CSS_SELECTOR, '.CircleButton_type_prev')
+class ImagesPage(Region):
+    """Страница картинок yandex"""
+    category_picture        =   Element(By.XPATH,        '//*[@class="PopularRequestList"]/div[1]/a/div[2]', 'Первая категория картинок')
+    input_on_images_page    =   Element(By.CSS_SELECTOR, '.input__control', 'Поле ввода запроса')
+    block_search_images     =   Element(By.CSS_SELECTOR, '.serp-controller__content', 'Блок с картинками')
+    first_images_in_block   =   Element(By.XPATH,        '//div[@class="serp-controller__content"]/div/div[1]//a','Первая картинка')
+    open_images             =   Element(By.CSS_SELECTOR, '.MMImage-Preview', 'Картинка в карусели')
+    next_image              =   Element(By.CSS_SELECTOR, '.CircleButton_type_next', 'Кнопка следующая картинка')
+    prev_image              =   Element(By.CSS_SELECTOR, '.CircleButton_type_prev', 'Кнопка предыдущая картинка')
 
-    @allure.step('Проверка url https://yandex.ru/images/')
-    def should_be_images_url(self):
-        with allure.step('При преходе на страницу Yandex images'
-                         'url:https://yandex.ru/images/'):
-            assert 'https://yandex.ru/images/' in self.browser.current_url, \
-                f'Is not Yandex images url {self.browser.current_url}'
+    def should_be_images_url(self, url):
+        """Проверка url"""
+        self.browser.should_be(UrlContains(url))
 
-    @allure.step('Открытие и проверка соответствие текста в input')
     def open_and_test_first_category(self):
-        image = self.browser.find_element(
-            *self.CATEGORY_PICTURE
-        )
-        text_category = self.browser.find_element(
-            *self.CATEGORY_PICTURE
-        ).text
-        image.click()
-        text_in_input = self.browser.find_element(
-            *self.INPUT_ON_IMAGES_PAGE
-        ).get_attribute('value')
-        with allure.step('При клике на первую категорию в input верный текст'):
-            assert text_category == text_in_input, \
-                'Сategory name does not match text in search'
+        """Открытие первой катеогрии картинок и проверка
+        сответствия текста и поискового запроса
+        """
+        text_category = self.category_picture.text
+        self.category_picture.click()
+        text_in_input = self.input_on_images_page.get_attribute('value')
+        assert_that(text_category, equal_to(text_in_input), 'Имя категории не совпадает с запросом')
 
-    @allure.step('Проверка наличия блока с картинками')
     def should_be_block_images_search(self):
-        with allure.step('На странице присутствует поисковая'
-                         'выдача с картинками'):
-            assert self.is_element_present(*self.BLOCK_SEARCH_IMAGES), \
-                'Block with images is not presented'
+        """Проверка блока с картинками"""
+        self.block_search_images.should_be(Displayed)
 
-    @allure.step('Открытие и проверка первой картинки')
     def open_and_check_first_image(self):
-        image = self.browser.find_element(
-            *self.FIRST_IMAGES_IN_BLOCK
-        )
-        image.click()
-        with allure.step('Открылась первая картинка'):
-            assert self.is_element_present(*self.OPEN_IMAGES), \
-                'Image does not open'
+        """Открытие и проверка первой картинки"""
+        self.first_images_in_block.click()
+        self.open_images.should_be(Displayed)
 
-    @allure.step('Проверка переключения картинок')
     def go_on_next_and_prev_images(self):
-        fist_image_src = self.browser.find_element(
-            *self.OPEN_IMAGES
-        ).get_attribute('src')
-        self.browser.find_element(*self.NEXT_IMAGE).click()
-        next_image_src = self.browser.find_element(
-            *self.OPEN_IMAGES
-        ).get_attribute('src')
-        with allure.step('Переключение картинки'):
-            assert fist_image_src != next_image_src, \
-                'Images are the same'
+        """Переключение картинок кнопками навигации и проверка"""
+        fist_image_src = self.open_images.get_attribute('src')
+        self.next_image.click()
+        next_image_src = self.open_images.get_attribute('src')
+        assert_that(fist_image_src, not_equal(next_image_src), 'Картинки одинаковые')
+        self.prev_image.click()
+        last_image_src = self.open_images.get_attribute('src')
+        assert_that(fist_image_src, equal_to(last_image_src), 'Картинки не одинаковые')
 
-        self.browser.find_element(*self.PREV_IMAGE).click()
-        last_image_src = self.browser.find_element(
-            *self.OPEN_IMAGES
-        ).get_attribute('src')
-        with allure.step('Возврат к предыдущей картинке'):
-            assert fist_image_src == last_image_src, \
-                'Images are not the same'
+    def switch_to_last_tab(self):
+        """Открытие последней вкладки"""
+        self.browser.switch_to_window(-1)
