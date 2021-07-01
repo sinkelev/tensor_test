@@ -14,7 +14,7 @@ class TestSearch(TestCaseUI):
     def setup_class(cls):
         cls.browser.open('https://yandex.ru/')
 
-    def test_search_tensor_in_yandex(self):
+    def test_01_search_tensor(self):
         """Поиск 'Тензор' в yandex"""
 
         log('Проверяем наличие поля ввода и подсказки')

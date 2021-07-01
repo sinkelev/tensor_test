@@ -14,7 +14,9 @@ class TestSearch(TestCaseUI):
     def setup_class(cls):
         cls.browser.open('https://yandex.ru/')
 
-    def test_images_search_in_yandex(self):
+    def test_01_images_in_yandex(self):
+        """Открытие и перелистывание картинок"""
+
         log('Проверяем наличие ссылки на картинки')
         main = MainPage(self.driver)
         main.should_be_images_link()
