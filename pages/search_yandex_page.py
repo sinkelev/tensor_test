@@ -11,7 +11,7 @@ from selenium.webdriver.common.by import By
 class SearchPage(Region):
     """Страница поисковой выдачи yandex"""
 
-    search_tbl  =   Table(          By.CSS_SELECTOR,    '#search-result', 'Поисковая выдача')
+    search_tbl  =   Table(               By.CSS_SELECTOR,    '#search-result', 'Поисковая выдача')
     site_link_cslst  =   CustomList(     By.XPATH,           '//*[@class="serp-item"]//h2//a', 'Ссылки на сайт')
 
     def should_be_search_result_list(self):
