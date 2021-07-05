@@ -5,8 +5,8 @@
 from atf import run_tests, log
 from atf.ui import TestCaseUI
 
-from pages.main_yandex_page import MainPage
-from pages.search_yandex_page import SearchPage
+from pages.main_page import MainPage
+from pages.search_page import SearchPage
 
 
 class TestSearch(TestCaseUI):
@@ -22,16 +22,15 @@ class TestSearch(TestCaseUI):
         """Поиск 'Тензор' в yandex"""
 
         log('Проверяем наличие поля ввода и подсказки')
-        main = MainPage(self.driver)
-        main.should_be_search_field()
-        main.enter_request('Тензор')
-        main.should_be_suggest_list()
+        main_pg = MainPage(self.driver)
+        main_pg.enter_request('Тензор')
+        main_pg.should_be_suggest_list()
 
         log('Переход к поисковой выдачи и проверка ссылок')
-        MainPage(self.driver).press_enter()
-        search = SearchPage(self.driver)
-        search.should_be_search_result_list()
-        search.first_five_links_in_search_result('tensor.ru')
+        main_pg.press_enter()
+        search_pg = SearchPage(self.driver)
+        search_pg.should_be_search_result_list()
+        search_pg.match_links('tensor.ru', 5)
 
 
 if __name__ == '__main__':
