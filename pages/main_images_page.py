@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 class MainImagesPage(Region):
     """Страница картинок yandex"""
 
-    category_cslst      =   CustomList(   By.CSS_SELECTOR, '.PopularRequestList-Item', 'Категории картинок')
+    category_cslst   =   CustomList(   By.CSS_SELECTOR, '.PopularRequestList-Item', 'Категории картинок')
 
     def should_be_images_url(self, url):
         """Проверка url"""
