@@ -11,7 +11,7 @@ class MainPage(Region):
     """Главная страница yandex"""
 
     search_inp      = TextField     (By.CSS_SELECTOR, 'input.input__control', 'Поле ввода запроса')
-    suggest_elm     = Element       (By.CSS_SELECTOR, '.mini-suggest__popup', 'Подсказками')
+    suggest_elm     = Element       (By.CSS_SELECTOR, '.mini-suggest__popup', 'Список с подсказками поиска')
     images_lnk      = Link          (By.CSS_SELECTOR, '[data-id="images"]', 'Картинки')
     services_cslst  = CustomList    (By.CSS_SELECTOR, '.services-new__list-item a', 'Сервисы')
     submit_btn      = Button        (By.CSS_SELECTOR, 'button.button.mini-suggest__button', 'Найти')

@@ -11,21 +11,22 @@ from selenium.webdriver.common.by import By
 class SearchPage(Region):
     """Страница поисковой выдачи yandex"""
 
-    search_cslst    =   CustomList(    By.CSS_SELECTOR,    '.serp-item', 'Поисковая выдача')
-    link            =   Link(          By.CSS_SELECTOR,    '.Link.OrganicTitle-Link_wrap', 'Ссылки на сайт')
+    search_cslst = CustomList(By.CSS_SELECTOR, '.serp-item', 'Поисковая выдача')
+    link = Link(By.CSS_SELECTOR, '.Link.OrganicTitle-Link_wrap', 'Ссылки на сайт')
 
     def check_search_result_list(self, check_elm=5, **kwargs):
-        """В результатах поисковой выдачи присутстует ссылка
+        """Проверка поисковой выдачи
         :param check_elm: кол-во проверяемых элементов
-        :param kwargs: словарь искомых значений
+        :param kwargs: словарь искомых значений:
+            Ссылка: url сайта
         """
 
         self.check_load()
 
-        for i in range(check_elm-1):
-            elm = self.get_elm(i+1)
-            self.link.add_parent(elm)
+        for i in range(check_elm - 1):
+            elm = self.get_elm(i + 1)
             if 'Ссылка' in kwargs.keys():
+                self.link.add_parent(elm)
                 link_in_search = self.link.get_attribute('href')
                 assert_that(kwargs.get('Ссылка'), is_in(link_in_search),
                             f'Ссылка {kwargs.get("Ссылка")} '

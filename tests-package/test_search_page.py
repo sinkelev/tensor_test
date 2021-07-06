@@ -18,8 +18,8 @@ class TestSearch(TestCaseUI):
     def setup_class(cls):
         cls.browser.open('https://yandex.ru/')
 
-    def test_01_search_tensor(self):
-        """Поиск 'Тензор' в yandex"""
+    def test_01_main_page_search_links(self):
+        """Поиск в yandex"""
 
         search_info = dict(Ссылка='tensor.ru')
 
