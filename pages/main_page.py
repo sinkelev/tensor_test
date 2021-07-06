@@ -37,7 +37,7 @@ class MainPage(Region):
         self.search_inp.type_in(request)
         self.suggest_elm.should_be(Displayed)
         if not submit_type:
-            self.search_inp.send_keys(u'\ue007')
+            self.search_inp.send_keys(Keys.ENTER)
         else:
             self.submit_btn.click()
 
