@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Модуль для страницы каритнок yandex.ru
+Модуль для главной страницы картинок yandex.ru
 """
 from atf.ui import *
 
@@ -13,7 +13,9 @@ class MainImagesPage(Region):
     category_cslst   =   CustomList(   By.CSS_SELECTOR, '.PopularRequestList-Item', 'Категории картинок')
 
     def check_url(self, url):
-        """Проверка url"""
+        """Проверка url
+        :param url: Url для сравнения
+        """
         self.browser.should_be(UrlContains(url))
 
     def open_category(self, num=1):
@@ -27,4 +29,5 @@ class MainImagesPage(Region):
 
     def check_load(self):
         """Проверка загрузки страницы"""
+
         self.category_cslst.should_be(Displayed)

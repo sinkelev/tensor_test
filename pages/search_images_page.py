@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Модуль для страницы картинок yandex.ru
+Модуль для страницы поиска картинок yandex.ru
 """
 from atf.assert_that import assert_that, equal_to
 from atf.ui import *
@@ -16,17 +16,25 @@ class SearchImagesPage(Region):
     images_cslst        =   CustomList(   By.CSS_SELECTOR, '.serp-item__preview', 'Картинки')
 
     def check_text_in_input(self, category_name):
+        """Сравнить текст поискового запроса и
+        имя категории при переходе
+        :param category_name: имя категории
+        """
+
         self.check_load()
         input_txt = self.search_request_inp.get_attribute('value')
         assert_that(input_txt, equal_to(category_name),
                     'Имя категории не совпадает с запросом')
 
     def open_image(self, num=1):
-        """Открытие и проверка первой картинки"""
+        """Открытие и проверка картинки
+        :param num: порядковый номер картинки
+        """
 
         self.block_images_elm.should_be(Displayed)
         self.images_cslst.item(num).click()
 
     def check_load(self):
         """Проверка загрузки страницы"""
+
         self.images_cslst.item(1).should_be(Displayed)

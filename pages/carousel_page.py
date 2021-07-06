@@ -16,7 +16,7 @@ class CarouselImagesPage(Region):
     prev_btn            =   Button(       By.CSS_SELECTOR, '.CircleButton_type_prev', 'Предыдущая картинка')
 
     def check_carousel_navigation(self):
-        """Переключение картинок кнопками навигации и проверка"""
+        """Переключение картинок кнопками навигации и проверка src"""
 
         self.check_load()
         first_image_src = self.img_carousel_elm.get_attribute('src')
@@ -32,4 +32,5 @@ class CarouselImagesPage(Region):
 
     def check_load(self):
         """Проверка загрузки"""
+
         self.img_carousel_elm.should_be(Displayed)

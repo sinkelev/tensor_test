@@ -11,21 +11,24 @@ from selenium.webdriver.common.by import By
 class SearchPage(Region):
     """Страница поисковой выдачи yandex"""
 
-    search_cslst     =   CustomList(    By.CSS_SELECTOR,    '.serp-item', 'Поисковая выдача')
-    site_link_cslst  =   CustomList(     By.CSS_SELECTOR,    '.Link.OrganicTitle-Link_wrap', 'Ссылки на сайт')
+    search_cslst    =   CustomList(    By.CSS_SELECTOR,    '.serp-item', 'Поисковая выдача')
+    link            =   Link(          By.CSS_SELECTOR,    '.Link.OrganicTitle-Link_wrap', 'Ссылки на сайт')
 
-    def check_search_result_list(self, check_rows=5, **kwargs):
-        """В результатах поисковой выдачи присутстует ссылка """
+    def check_search_result_list(self, check_elm=5, **kwargs):
+        """В результатах поисковой выдачи присутстует ссылка
+        :param check_elm: кол-во проверяемых элементов
+        :param kwargs: словарь искомых значений
+        """
 
         self.check_load()
 
-        for i in range(check_rows-1):
+        for i in range(check_elm-1):
             elm = self.get_elm(i+1)
-            self.site_link_cslst.add_parent(elm)
+            self.link.add_parent(elm)
             if 'Ссылка' in kwargs.keys():
-                link_in_search = self.site_link_cslst.get_attribute('href')
+                link_in_search = self.link.get_attribute('href')
                 assert_that(kwargs.get('Ссылка'), is_in(link_in_search),
-                            f'Ссылка {kwargs.get("Ссылка")}'
+                            f'Ссылка {kwargs.get("Ссылка")} '
                             f'не совпадает с {link_in_search}')
 
     def check_load(self):
