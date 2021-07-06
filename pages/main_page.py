@@ -27,8 +27,10 @@ class MainPage(Region):
 
     def search(self, request, submit_type=True):
         """Ввести запрос в поисковую строку
-        :param request: запрос
-        :param submit_type: отправить нажатием на кнопку Найти
+        :param request: (string) запрос
+        :param submit_type:
+            (True) отправить нажатием на кнопку Найти
+            (False) отправить нажатием на клавишу Enter
         """
 
         self.check_load()

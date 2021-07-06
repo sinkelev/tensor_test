@@ -37,7 +37,7 @@ class TestSearch(TestCaseUI):
 
         log('Проверка поискового запроса. Открытие картиноки в карусели.')
         search_images_pg = SearchImagesPage(self.driver)
-        search_images_pg.check_text_in_input(category_name)
+        search_images_pg.check_search(category_name)
         search_images_pg.open_image(image_num)
 
         log('Проверка навигации карусели.')

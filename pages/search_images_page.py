@@ -15,10 +15,10 @@ class SearchImagesPage(Region):
     block_images_elm    =   Element(      By.CSS_SELECTOR, '.serp-controller__content', 'Блок с картинками')
     images_cslst        =   CustomList(   By.CSS_SELECTOR, '.serp-item__preview', 'Картинки')
 
-    def check_text_in_input(self, category_name):
+    def check_search(self, category_name):
         """Сравнить текст поискового запроса и
         имя категории при переходе
-        :param category_name: имя категории
+        :param category_name: (string) имя категории
         """
 
         self.check_load()
@@ -28,7 +28,7 @@ class SearchImagesPage(Region):
 
     def open_image(self, num=1):
         """Открытие и проверка картинки
-        :param num: порядковый номер картинки
+        :param num: (int) порядковый номер картинки
         """
 
         self.block_images_elm.should_be(Displayed)

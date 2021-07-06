@@ -14,13 +14,13 @@ class MainImagesPage(Region):
 
     def check_url(self, url):
         """Проверка url
-        :param url: Url для сравнения
+        :param url: (string) Url для сравнения
         """
         self.browser.should_be(UrlContains(url))
 
     def open_category(self, num=1):
         """Открытие категории картинок
-        :param num: порядковый номер категории
+        :param num: (int) порядковый номер категории
         """
         self.check_load()
         category_txt = self.category_cslst.item(num).text
