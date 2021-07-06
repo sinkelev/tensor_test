@@ -17,8 +17,6 @@ class TestSearch(TestCaseUI):
     """
 
     url = 'https://yandex.ru/'
-    category_num = 1
-    image_num = 1
 
     @classmethod
     def setup_class(cls):
@@ -27,23 +25,24 @@ class TestSearch(TestCaseUI):
     def test_01_images_in_yandex(self):
         """Открытие и перелистывание картинок"""
 
-        main_pg = MainPage(self.driver)
+        category_num = 1
+        image_num = 1
 
         log('Переход на сервис картинок. Проверка URL. Открытие категории картинок.')
+        main_pg = MainPage(self.driver)
         main_pg.go_to('Картинки')
         main_images_pg = MainImagesPage(self.driver)
-        main_images_pg.switch_to_last_tab()
-        main_images_pg.should_be_images_url(self.url + 'images/')
-        category_name = main_images_pg.open_category(self.category_num)
+        main_images_pg.check_url(self.url + 'images/')
+        category_name = main_images_pg.open_category(category_num)
 
         log('Проверка поискового запроса. Открытие картиноки в карусели.')
         search_images_pg = SearchImagesPage(self.driver)
         search_images_pg.check_text_in_input(category_name)
-        search_images_pg.open_image(self.image_num)
+        search_images_pg.open_image(image_num)
 
         log('Проверка навигации карусели.')
         carousel_images = CarouselImagesPage(self.driver)
-        carousel_images.go_on_next_and_prev_images()
+        carousel_images.check_carousel_navigation()
 
 
 if __name__ == '__main__':

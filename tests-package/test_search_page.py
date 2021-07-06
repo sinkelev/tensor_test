@@ -21,16 +21,15 @@ class TestSearch(TestCaseUI):
     def test_01_search_tensor(self):
         """Поиск 'Тензор' в yandex"""
 
+        search_info = dict(Ссылка='tensor.ru')
+
         log('Проверяем наличие поля ввода и подсказки')
         main_pg = MainPage(self.driver)
-        main_pg.enter_request('Тензор')
-        main_pg.should_be_suggest_list()
+        main_pg.search('Тензор', False)
 
         log('Переход к поисковой выдачи и проверка ссылок')
-        main_pg.press_enter()
         search_pg = SearchPage(self.driver)
-        search_pg.should_be_search_result_list()
-        search_pg.match_links('tensor.ru', 5)
+        search_pg.check_search_result_list(**search_info)
 
 
 if __name__ == '__main__':

@@ -15,10 +15,10 @@ class CarouselImagesPage(Region):
     next_btn            =   Button(       By.CSS_SELECTOR, '.CircleButton_type_next', 'Следующая картинка')
     prev_btn            =   Button(       By.CSS_SELECTOR, '.CircleButton_type_prev', 'Предыдущая картинка')
 
-    def go_on_next_and_prev_images(self):
+    def check_carousel_navigation(self):
         """Переключение картинок кнопками навигации и проверка"""
 
-        self.img_carousel_elm.should_be(Displayed)
+        self.check_load()
         first_image_src = self.img_carousel_elm.get_attribute('src')
         self.next_btn.click()
         next_image_src = self.img_carousel_elm.get_attribute('src')
@@ -29,3 +29,7 @@ class CarouselImagesPage(Region):
         last_image_src = self.img_carousel_elm.get_attribute('src')
         assert_that(first_image_src, equal_to(last_image_src),
                     'Картинки не одинаковые')
+
+    def check_load(self):
+        """Проверка загрузки"""
+        self.img_carousel_elm.should_be(Displayed)

@@ -134,3 +134,8 @@ allure-report
 reports
 
 .idea/
+
+js_errors/
+result.db
+screenshots
+test-reports

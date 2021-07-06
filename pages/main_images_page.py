@@ -12,7 +12,7 @@ class MainImagesPage(Region):
 
     category_cslst   =   CustomList(   By.CSS_SELECTOR, '.PopularRequestList-Item', 'Категории картинок')
 
-    def should_be_images_url(self, url):
+    def check_url(self, url):
         """Проверка url"""
         self.browser.should_be(UrlContains(url))
 
@@ -20,12 +20,11 @@ class MainImagesPage(Region):
         """Открытие категории картинок
         :param num: порядковый номер категории
         """
-        self.category_cslst.item(num).should_be(Displayed)
+        self.check_load()
         category_txt = self.category_cslst.item(num).text
         self.category_cslst.item(num).click()
         return category_txt
 
-    def switch_to_last_tab(self):
-        """Открытие последней вкладки"""
-
-        self.browser.switch_to_window(-1)
+    def check_load(self):
+        """Проверка загрузки страницы"""
+        self.category_cslst.should_be(Displayed)

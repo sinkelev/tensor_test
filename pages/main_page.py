@@ -11,28 +11,27 @@ class MainPage(Region):
     """Главная страница yandex"""
 
     search_inp      = TextField     (By.CSS_SELECTOR, 'input.input__control', 'Поле ввода запроса')
-    suggest_tbl     = Table         (By.CSS_SELECTOR, '.mini-suggest__popup', 'Подсказками')
+    suggest_elm     = Element       (By.CSS_SELECTOR, '.mini-suggest__popup', 'Подсказками')
     images_lnk      = Link          (By.CSS_SELECTOR, '[data-id="images"]', 'Картинки')
     services_cslst  = CustomList    (By.CSS_SELECTOR, '.services-new__list-item a', 'Сервисы')
-
-    def should_be_suggest_list(self):
-        """Проверка таблицы с подсказками (suggest)"""
-
-        self.suggest_tbl.should_be(Displayed)
 
     def go_to(self, name):
         """Клик по иконке сервиса"""
 
-        self.services_cslst.item(with_text=name).should_be(Displayed)
+        self.check_load()
         self.services_cslst.item(with_text=name).click()
+        self.browser.switch_to_window(-1)
 
-    def enter_request(self, request):
+    def search(self, request, submit_type=True):
         """Ввести запрос в поисковую строку"""
 
-        self.search_inp.should_be(Displayed)
+        self.check_load()
         self.search_inp.type_in(request)
+        self.suggest_elm.should_be(Displayed)
+        if not submit_type:
+            self.search_inp.send_keys(u'\ue007')
 
-    def press_enter(self):
-        """Нажать Enter"""
+    def check_load(self):
+        """Проверка загрузки страницы"""
 
-        self.search_inp.send_keys(u'\ue007')
+        self.search_inp.should_be(Displayed)

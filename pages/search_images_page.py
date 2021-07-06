@@ -14,10 +14,9 @@ class SearchImagesPage(Region):
     search_request_inp  =   TextField(    By.CSS_SELECTOR, '.input__control', 'Поисковый запрос')
     block_images_elm    =   Element(      By.CSS_SELECTOR, '.serp-controller__content', 'Блок с картинками')
     images_cslst        =   CustomList(   By.CSS_SELECTOR, '.serp-item__preview', 'Картинки')
-    img_carousel_elm    =   Element(      By.CSS_SELECTOR, '.MMImage-Preview', 'Картинка в карусели')
 
     def check_text_in_input(self, category_name):
-        self.search_request_inp.should_be(Displayed)
+        self.check_load()
         input_txt = self.search_request_inp.get_attribute('value')
         assert_that(input_txt, equal_to(category_name),
                     'Имя категории не совпадает с запросом')
@@ -27,4 +26,7 @@ class SearchImagesPage(Region):
 
         self.block_images_elm.should_be(Displayed)
         self.images_cslst.item(num).click()
-        self.img_carousel_elm.should_be(Displayed)
+
+    def check_load(self):
+        """Проверка загрузки страницы"""
+        self.images_cslst.item(1).should_be(Displayed)
